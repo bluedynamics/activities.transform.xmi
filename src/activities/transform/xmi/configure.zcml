@@ -1,0 +1,27 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:agx="http://namespaces.zope.org/agx">
+
+  <include package="agx.core" />
+  <include package="agx.io.xml" />
+
+  <!-- register this transform -->
+  <agx:transform
+    name="xmi2act"
+    class=".transform.XMI2Act"
+  />
+
+  <agx:generator
+    name="actgenerator"
+    transform="xmi2act"
+    depends="NO"
+  />
+
+  <!-- 2nd run Generator to resove references to elements which may not be
+    facturated in 1st run. Depends on ActTargetHandler. -->
+  <agx:generator
+    name="actreferences"
+    transform="xmi2act"
+    depends="actgenerator"
+  />
+
+</configure>
